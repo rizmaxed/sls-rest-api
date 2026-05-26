@@ -2,10 +2,7 @@ import { DynamoDBClient, PutItemCommand, DynamoDBServiceException } from "@aws-s
 import { v4 as uuid } from 'uuid';
 import { getResponseHeaders } from './util';
 
-const REGION = process.env.CDK_DEFAULT_REGION || 'us-east-2';
-const config = { region: REGION };
-
-const dyanamodb = new DynamoDBClient(config);
+const dynamodb = new DynamoDBClient({ region: process.env.AWS_REGION || 'us-east-1' });
 const tableName = process.env.CONTACTS_TABLE;
 
 export const handler = async (event: any) => {
@@ -13,7 +10,7 @@ export const handler = async (event: any) => {
         let item = JSON.parse(event.body).Item;
         item.contact_id = uuid();
 
-        await dyanamodb.send(new PutItemCommand({
+        await dynamodb.send(new PutItemCommand({
             TableName: tableName,
             Item: item
         }))

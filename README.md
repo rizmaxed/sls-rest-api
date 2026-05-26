@@ -40,10 +40,10 @@ npm run cdk:deploy   # Deploy stack to AWS
 
 The workflow at `.github/workflows/cdk-deploy.yml` runs on pull requests, pushes to `main`, and manual dispatch.
 
-| Event | Behaviour |
-|---|---|
-| Pull request | Install → Test → CDK Diff (no deploy) |
-| Push to `main` | Install → Test → CDK Diff → **manual approval** → CDK Deploy |
+| Event           | Behaviour                                                    |
+| --------------- | ------------------------------------------------------------ |
+| Pull request    | Install → Test → CDK Diff (no deploy)                        |
+| Push to `main`  | Install → Test → CDK Diff → **manual approval** → CDK Deploy |
 | Manual dispatch | Install → Test → CDK Diff → **manual approval** → CDK Deploy |
 
 ### Required GitHub setup

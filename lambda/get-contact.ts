@@ -1,7 +1,7 @@
 import { DynamoDBClient, GetItemCommand, DynamoDBServiceException } from "@aws-sdk/client-dynamodb";
 import { getResponseHeaders } from './util';
 
-const dynamodb = new DynamoDBClient({ region: process.env.CDK_DEFAULT_REGION || 'us-east-2' });
+const dynamodb = new DynamoDBClient({ region: process.env.AWS_REGION || 'us-east-1' });
 const tableName = process.env.CONTACTS_TABLE;
 
 export const handler = async (event: any) => {

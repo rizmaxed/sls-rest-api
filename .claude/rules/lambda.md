@@ -38,7 +38,7 @@ try {
 ## Environment Variables
 
 - Table name: `process.env.CONTACTS_TABLE` (set by CDK, always present at runtime)
-- Region: `process.env.CDK_DEFAULT_REGION || 'us-east-2'`
+- Region: `process.env.AWS_REGION || 'us-east-1'` — `AWS_REGION` is injected automatically by the Lambda runtime; the fallback only applies to local execution
 - If `CONTACTS_TABLE` is missing, the Lambda will fail at DynamoDB call time — treat it as a deployment misconfiguration
 
 ## ID Generation
