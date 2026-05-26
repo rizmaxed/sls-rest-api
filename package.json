@@ -11,6 +11,7 @@
     "cdk:deploy": "cdk deploy"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.161",
     "@types/jest": "^30.0.0",
     "@types/node": "25.9.1",
     "@types/uuid": "^10.0.0",
@@ -21,6 +22,7 @@
     "typescript": "~6.0.3"
   },
   "dependencies": {
+    "@aws-lambda-powertools/logger": "^2.33.1",
     "@aws-sdk/client-dynamodb": "^3.1053.0",
     "aws-cdk-lib": "2.257.0",
     "constructs": "^10.6.0",
