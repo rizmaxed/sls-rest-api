@@ -4,7 +4,7 @@ INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 [ -z "$COMMAND" ] && exit 0
 if echo "$COMMAND" | grep -qE 'git\s+(add|commit)'; then
-  if echo "$COMMAND" | grep -qE 'git\s+add\s+(-A|--all|\.)'; then
+  if echo "$COMMAND" | grep -qE 'git\s+add\s+(-A|--all|\.(\s|$))'; then
     echo "BLOCKED: Avoid git add . because it can stage secrets. Add files explicitly."
     exit 2
   fi
@@ -16,7 +16,7 @@ if echo "$COMMAND" | grep -qE 'git\s+(add|commit)'; then
     '\.pfx($|\s)'
     'credentials\.json'
     'credentials\.yaml'
-    'aws-credentials'
+    '(^|\s)aws-credentials($|\s)'
     '\.aws/'
   )
   for pattern in "${SECRET_FILE_PATTERNS[@]}"; do
