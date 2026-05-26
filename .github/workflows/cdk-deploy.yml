@@ -1,4 +1,4 @@
-name: CDK Deploy
+name: CDK DevOps Pipeline
 
 on:
   pull_request:
