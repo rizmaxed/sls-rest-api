@@ -1,0 +1,48 @@
+import { DynamoDBClient, GetItemCommand, DynamoDBServiceException } from "@aws-sdk/client-dynamodb";
+import { getResponseHeaders } from './util';
+
+const dynamodb = new DynamoDBClient({ region: process.env.CDK_DEFAULT_REGION || 'us-east-2' });
+const tableName = process.env.CONTACTS_TABLE;
+
+export const handler = async (event: any) => {
+    try {
+        const contactId = event.pathParameters?.id;
+        if (!contactId) {
+            return {
+                statusCode: 400,
+                headers: getResponseHeaders(),
+                body: JSON.stringify({ error: 'Bad Request', message: 'Missing contact id' })
+            };
+        }
+
+        const result = await dynamodb.send(new GetItemCommand({
+            TableName: tableName,
+            Key: { contact_id: { S: contactId } }
+        }));
+
+        if (!result.Item) {
+            return {
+                statusCode: 404,
+                headers: getResponseHeaders(),
+                body: JSON.stringify({ error: 'Not Found', message: 'Contact not found' })
+            };
+        }
+
+        return {
+            statusCode: 200,
+            headers: getResponseHeaders(),
+            body: JSON.stringify(result.Item)
+        };
+    } catch (error) {
+        console.log("Error", error);
+        let message = { error: "Exception", message: "Unknown error" };
+        if (error instanceof DynamoDBServiceException) {
+            message = { error: error.name, message: error.message };
+        }
+        return {
+            statusCode: 500,
+            headers: getResponseHeaders(),
+            body: JSON.stringify(message)
+        };
+    }
+};

@@ -1,0 +1,13 @@
+# Build artifacts
+*.js
+*.d.ts
+!jest.config.js
+
+# CDK
+cdk.out/
+
+# Dependencies
+node_modules/
+
+# macOS
+.DS_Store
